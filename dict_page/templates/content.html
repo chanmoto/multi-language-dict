@@ -1,0 +1,178 @@
+{% extends 'base.html' %}
+{% block content %}
+    {% if messages %}
+    {% for message in messages %}
+        <div class="alert alert-warning alert-dismissable" role="alert">
+          <button class="close" data-dismiss="alert">
+              <small><sup>x</sup></small>
+          </button>
+            {{ message }}
+        </div>
+    {% endfor %}
+{% endif %}
+
+    <form method="POST" action = "{% url 'content' %}">
+      {% csrf_token %}
+      <div class="form-group">
+      <input  type="search" id = 'inputtxt' placeholder="Add new word" aria-label="" name="word" value='{{ form.word.value|default_if_none:"" }}'>
+      <button class="btn btn-primary my-2 my-sm-0" id="translate"  type="button" >
+      <span  aria-hidden="true"></span>Search</button>
+      </div>
+      <div class="form-group">
+      <input  class="form-control" id="result1" type="search" placeholder="Add definition" aria-label="" name="def1" value='{{ form.def1.value|default_if_none:"" }}'>
+      <input class="form-control"  id="result2" type="search" placeholder="Add definition" aria-label="" name="def2" value='{{ form.def2.value|default_if_none:"" }}'>
+      <input class="form-control"  id="result3" type="search" placeholder="Add definition" aria-label="" name="def3" value='{{ form.def3.value|default_if_none:"" }}'>
+      <input  class="form-control" id="result4" type="search" placeholder="Add definition" aria-label="" name="def4" value='{{ form.def4.value|default_if_none:"" }}'>
+      <input  class="form-control"  id="result5" type="search" placeholder="Add definition" aria-label="" name="def5" value='{{ form.def5.value|default_if_none:"" }}'>
+      <input  class="form-control" id="result6" type="search" placeholder="Add definition" aria-label="" name="def6" value='{{ form.def6.value|default_if_none:"" }}'>
+      <input class="form-control"  id="result7" type="search" placeholder="Add definition" aria-label="" name="def7" value='{{ form.def7.value|default_if_none:"" }}'>
+      <input class="form-control"  id="result8" type="search" placeholder="Add definition" aria-label="" name="def8" value='{{ form.def8.value|default_if_none:"" }}'>
+      <input  class="form-control" id="result9" type="search" placeholder="Add definition" aria-label="" name="def9" value='{{ form.def9.value|default_if_none:"" }}'>
+      <input  class="form-control"  id="result10" type="search" placeholder="Add definition" aria-label="" name="def10" value='{{ form.def10.value|default_if_none:"" }}'>
+
+    </div>
+      <div class="form-group">
+      <button id="submit" onclick="backSubmit(this)">Add</button>
+      </div>
+  </form>
+  <button id="button_temp" onclick="pronounce_temp(this)">Voice</button>
+
+<hr>
+
+	<table class="table table-bordered">
+                <tr>
+                  <th>no</th>
+                    <th>def1</th>
+                    <th>def1</th>
+                    <th>def1</th>
+                    <th>def1</th>
+                    <th>def1</th>
+                    <th>def1</th>
+                    <th>def1</th>
+                    <th>def1</th>
+                    <th>def1</th>
+            <th>def1</th>
+
+                    <th>action</th>
+                    <th>voice</th>
+                </tr>
+                {% for w in all_words %}
+                
+                <tr>             
+
+                  <td><a>{{ w.id }}</a></td>
+                    <td><a>{{ w.def1 }}</a></td>
+                    <td><a>{{ w.def2 }}</a></td>
+                    <td><a>{{ w.def3 }}</a></td>
+                    <td><a>{{ w.def4 }}</a></td>
+                    <td><a>{{ w.def5 }}</a></td>
+                    <td><a>{{ w.def6 }}</a></td>
+                    <td><a>{{ w.def7 }}</a></td>
+                    <td><a>{{ w.def8 }}</a></td>
+                    <td><a>{{ w.def9 }}</a></td>
+                    <td><a>{{ w.def10 }}</a></td>
+
+                    <td><center><a href="{% url 'delete' w.id%}" 
+                        onclick="return confirm('本当に削除してよろしいですか？')">
+                        Delete</a></center></td>
+                    <td><center>
+                      <button id="button{{w.id}}" onclick="pronounce(this)">
+                        Voice</a></center></td
+				</tr>
+		{% endfor %}
+	</table>
+
+<script type="text/javascript">
+
+var dictionary = "{{ dic|safe }}";
+var url_search = "{% url 'search' %}";
+
+var lang =['en','zh-Hans','ko',     'yue','hi','fr','ru','es','de','it']
+var speaklang =['en','zh-cn','ko','zh-HK','hi','fr','ru','es','de','it']
+
+$(function() {
+  //Translate text with flask route
+  $("#translate").on("click", function(e) {
+    e.preventDefault();
+    var translateVal = inputtxt.value;
+    
+    if (translateVal !== "") {
+      translate(translateVal,lang[0],'#result1');
+      translate(translateVal,lang[1],'#result2');
+      translate(translateVal,lang[2],'#result3');
+      translate(translateVal,lang[3],'#result4');
+      translate(translateVal,lang[4],'#result5');
+      translate(translateVal,lang[5],'#result6');
+      translate(translateVal,lang[6],'#result7');
+      translate(translateVal,lang[7],'#result8');
+      translate(translateVal,lang[8],'#result9');
+      translate(translateVal,lang[9],'#result10');
+    }
+  });
+});
+
+function translate(translateVal,languageVal,elem){
+    var translateRequest = { 'text': translateVal, 'to': languageVal }
+
+      $.ajax({
+        url: "{% url 'translate' %}",
+        method: 'POST',
+        headers: {
+            'Content-Type':'application/json',
+            "X-CSRFToken": '{{ csrf_token }}'
+        },
+        dataType: 'json',
+        data: JSON.stringify(translateRequest),
+        success: function(data) {
+          for (var i = 0; i < data.length; i++) {
+            textContent = data[i].translations[0].text;
+            $(elem).val(textContent);
+          }
+        }
+      });
+    };
+  
+
+//
+
+function pronounce(ele) {
+var words = $(ele).closest('td').closest('tr');
+var words2 = words[0].innerText;
+var separatorString = "\t";//tab区切りで分割//
+var wordk = words2.split(separatorString)
+var word = wordk.splice(1,10);
+
+let result = new Map(speaklang.map((k, i) => [[k], word[i]]));
+
+for (let key of result.keys()) {
+
+  let u = new SpeechSynthesisUtterance();
+  u.lang = key;
+  u.text = result.get(key);
+  speechSynthesis.speak(u);
+}
+}
+
+function pronounce_temp(ele) {
+var words = $(ele).parent().find(".form-control");
+let result = new Map(speaklang.map((k, i) => [[k], words[i].value]));
+
+for (let key of result.keys()) {
+  let u = new SpeechSynthesisUtterance();
+  u.lang = key;
+  u.text = result.get(key);
+  speechSynthesis.speak(u);
+}
+}
+
+
+function backSubmit() {
+    // submitで送信せず、clickでサブミットボタンを押した事にする
+    document.form.submit();
+}
+
+
+</script>
+
+{% endblock %}
+
