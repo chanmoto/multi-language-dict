@@ -19,7 +19,7 @@ subscription_key = 'your api key'
 ######################  
 ```
 
-
+```
 Directory  
 
 C:.  
@@ -53,7 +53,7 @@ C:.
     │      base.html  
     │      content.html       
     │      home.html  
-    
+```
     
     
 3)   pip install -r requirements.txt  
