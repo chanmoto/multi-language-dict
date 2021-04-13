@@ -1,19 +1,24 @@
 # Multi Language Dictionary   
 
-This app performs GOOGLE translations in 5 languages and stocks the SQLITE  
+This app performs microsoft translations in multi languages and stocks the SQLITE  
 
-The GOOGLE-API (for a fee) is required for translation.  
+The microsoft-API is required for translation.  
 
-1)get google api  
-2)rewrite below code  
+1)get microsoft api-key   
+    https://api.cognitive.microsofttranslator.com'  
+    
+2)rewrite to next code  
 
-dict_page/templates/content.html  
+dict_page/config.py
+
+```python
 ######################  
-function translate(lang,elem){  
-var uri = 'https://www.googleapis.com/language/translate/v2';    ##<---- get api key  
-var q =  inputtxt.value;  
-var key='write api key here';    ##<----   here  
+
+subscription_key = 'your api key'
+        
 ######################  
+```
+
 
 Directory  
 
@@ -37,14 +42,15 @@ C:.
     │  tests.py  
     │  urls.py  
     │  utils.py    
-    │  views.py  
+    │  views.py
+      config.py   #####<----- this file must be rewritten  
     │  
     ├─migrations  
     │  
     ├─templates  
     │      about.html  
     │      base.html  
-    │      content.html       #####<----- this file must be rewritten  
+    │      content.html       
     │      home.html  
     
     
