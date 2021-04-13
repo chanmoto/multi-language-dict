@@ -43,6 +43,7 @@ C:.
     │  urls.py  
     │  utils.py    
     │  views.py
+    
     │  config.py   #####<----- this file must be rewritten  
     │  
     ├─migrations  
