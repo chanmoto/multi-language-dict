@@ -63,6 +63,7 @@ def delete(request, id):
     return redirect("/content") 
 
 def content(request):
+    pdb.set_trace()
     all_words = Dictionary.objects.all
     form = AddForm(request.POST)
 
