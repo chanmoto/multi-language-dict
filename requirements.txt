@@ -3,3 +3,4 @@ django-heroku
 whitenoise
 Django
 requests
+beautifulsoup4
