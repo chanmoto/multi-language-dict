@@ -73,6 +73,8 @@ def content(request):
 
         form.save()
         messages.success(request, 'A new word has been added to the Dictionary'  )
+    
+    pdb.set_trace()
     return render(request, 'content.html', {'form': form ,'all_words': all_words})
 
 def search(request,*args,**kwargs):
