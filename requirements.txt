@@ -2,3 +2,4 @@ gunicorn
 django-heroku
 whitenoise
 Django
+requests
