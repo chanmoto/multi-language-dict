@@ -2,8 +2,6 @@
 
 This app performs microsoft translations in multi languages and stocks the SQLITE  
 
-movie : https://github.com/chanmoto/multi-language-dict/blob/master/%E3%83%9E%E3%83%AB%E3%83%81%E3%83%A9%E3%83%B3%E3%82%B1%E3%83%BC%E3%82%B8%E8%BE%9E%E6%9B%B8.mp4
-
 The microsoft-API is required for translation.  
 
 1)get microsoft api-key   
