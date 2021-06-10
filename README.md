@@ -2,6 +2,9 @@
 
 This app performs microsoft translations in multi languages and stocks the SQLITE  
 
+https://user-images.githubusercontent.com/33125051/121458361-2c6d0200-c9e4-11eb-8b32-a88cf0268c97.mp4
+
+
 The microsoft-API is required for translation.  
 
 1)get microsoft api-key   
